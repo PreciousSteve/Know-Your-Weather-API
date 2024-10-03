@@ -6,6 +6,6 @@ app = FastAPI(title="Know Your Weather API",
               version="1.0.0")
 
 
-@app.get("/", tags=["Home"], description="This is the root Route of the app")
-def read_root():
-    return {"message":"Welcome to KnowYourWeather API"}
+@app.get("/v1/", tags=["Home"], description="This is the root Route of the app")
+def read_root_v1():
+    return {"message":"Welcome to KnowYourWeather API - version 1"}
