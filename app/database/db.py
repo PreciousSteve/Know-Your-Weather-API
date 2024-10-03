@@ -11,3 +11,14 @@ engine = create_engine(DATABASE_URL,
                        pool_timeout=30,  # Timeout in seconds to wait for a connection
                        pool_recycle=1800  # Recycle connections after 30 minutes
 )
+
+SessionLocal = sessionmaker(autoflush=False, autocommit=False, bind = engine)
+
+Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
