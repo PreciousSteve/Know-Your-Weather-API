@@ -1,5 +1,7 @@
 from app.models.user import User
 from sqlalchemy.orm import Session
+from app.schemas import user_schema
+from app.core.security import get_password_hash
 
 
 def get_user_by_username(session:Session, username:str):
@@ -8,3 +10,13 @@ def get_user_by_username(session:Session, username:str):
 
 def get_user_by_email(session:Session, email:str):
     return session.query(User).filter(User.email == email).first()
+
+
+def create_user(session: Session, user:user_schema.UserCreate):
+    hashed_password = get_password_hash(user.password)
+    new_user = User(username=user.username, email=user.email, hashed_password = hashed_password)
+    session.add(new_user)
+    session.commit()
+    session.refresh(new_user)
+    
+    return new_user
