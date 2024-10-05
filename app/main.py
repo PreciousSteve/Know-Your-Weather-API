@@ -1,6 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.exceptions import RequestValidationError
+from sqlalchemy.exc import IntegrityError
 from .database.db import engine, Base
 from .routers import user
+from .utils.error_handlers import (integrity_error_handler, general_exception_handler, http_exception_handler, validation_exception_handler)
 
 
 app = FastAPI(title="Know Your Weather API", 
@@ -17,3 +20,11 @@ def read_root_v1():
 
 
 app.include_router(user.router, prefix='/v1')
+
+
+
+# Register exception handlers
+app.add_exception_handler(HTTPException, http_exception_handler)
+app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_exception_handler(IntegrityError, integrity_error_handler)
+app.add_exception_handler(Exception, general_exception_handler)
