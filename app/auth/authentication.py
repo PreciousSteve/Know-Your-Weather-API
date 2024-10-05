@@ -33,7 +33,7 @@ def create_access_token(data:dict, expires_delta: Optional[timedelta]):
 
 
 
-def get_current_user(token: Annotated[str, Depends(security_scheme)], session: Session=Depends(get_db)):
+def get_current_user(token: Annotated[str, Depends(security_scheme)], session=Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -46,7 +46,7 @@ def get_current_user(token: Annotated[str, Depends(security_scheme)], session: S
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    user = user_crud.get_user_by_username(session:Session, username = username)
+    user = user_crud.get_user_by_username(session, username = username)
     if user is None:
         raise credentials_exception
     return user
