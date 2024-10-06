@@ -7,7 +7,7 @@ from datetime import datetime, timezone, timedelta
 from app.crud import user_crud
 from app.core.security import verify_password
 from app.core import config
-from database.db import get_db
+from app.database.db import get_db
 
 
 security_scheme = OAuth2PasswordBearer(tokenUrl="login")
@@ -15,9 +15,11 @@ security_scheme = OAuth2PasswordBearer(tokenUrl="login")
 def authenticate_user(session:Session, email:str, password:str):
     user = user_crud.get_user_by_email(session, email)
     if not user:
-        return None
-    if not verify_password(password, user.password):
-        return None
+        print("user not founds")
+        return False
+    if not verify_password(password, user.hashed_password):
+        print("password mismatch")
+        return False
     return user
 
 

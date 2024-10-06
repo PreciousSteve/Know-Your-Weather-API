@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.exceptions import RequestValidationError
 from sqlalchemy.exc import IntegrityError
 from .database.db import engine, Base
-from .routers import register
+from .routers import register, login
 from .utils.error_handlers import (integrity_error_handler, general_exception_handler, http_exception_handler, validation_exception_handler)
 
 
@@ -20,6 +20,7 @@ def read_root_v1():
 
 
 app.include_router(register.router, prefix='/v1')
+app.include_router(login.router, prefix="/v1")
 
 
 
