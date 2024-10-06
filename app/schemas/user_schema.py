@@ -29,3 +29,9 @@ class UserCreate(BaseModel):
     
     class Config:
         orm_mode = True
+        
+        
+
+class Login(BaseModel):
+    email: EmailStr
+    password: str
