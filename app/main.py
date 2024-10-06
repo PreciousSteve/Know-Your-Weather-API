@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.exceptions import RequestValidationError
 from sqlalchemy.exc import IntegrityError
 from .database.db import engine, Base
-from .routers import user
+from .routers import register
 from .utils.error_handlers import (integrity_error_handler, general_exception_handler, http_exception_handler, validation_exception_handler)
 
 
@@ -19,7 +19,7 @@ def read_root_v1():
     return {"message":"Welcome to KnowYourWeather API - version 1"}
 
 
-app.include_router(user.router, prefix='/v1')
+app.include_router(register.router, prefix='/v1')
 
 
 
