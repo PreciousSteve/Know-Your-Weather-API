@@ -26,3 +26,6 @@ class UserCreate(BaseModel):
         if 'password' in info.data and value != info.data['password']:
             raise ValueError('Password and Confirm password do not match')
         return value
+    
+    class Config:
+        orm_mode = True
