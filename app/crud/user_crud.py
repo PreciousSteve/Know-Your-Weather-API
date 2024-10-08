@@ -20,3 +20,12 @@ def create_user(session: Session, user:user_schema.UserCreate):
     session.refresh(new_user)
     
     return new_user
+
+def update_profile(session:Session, existing_profile, profile:user_schema.UserUpdate):
+    hashed_password = get_password_hash(profile.password)
+    existing_profile.username = profile.username
+    existing_profile.email = profile.email
+    existing_profile.hashed_password = hashed_password
+    session.commit()
+    session.refresh(existing_profile)
+    return existing_profile
