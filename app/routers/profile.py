@@ -23,11 +23,13 @@ def edit_profile(username:str, profile:UserUpdate, session: Session=Depends(get_
     if existing_profile.id != current_user.id:
         raise HTTPException(status_code=403, detail="Not authorized to edit this profile")
     
+    # Check for duplicate email, but allow the same email as the current one
     if profile.email and profile.email != existing_profile.email:
         existing_user_by_email = get_user_by_email(session, profile.email)
         if existing_user_by_email:
             raise HTTPException(status_code=409, detail="Email already exists")
-     
+    
+    # Check for duplicate username, but allow the same username as the current one
     if profile.username and profile.username != existing_profile.username:
         existing_user_by_username = get_user_by_username(session, profile.username)
         if existing_user_by_username:
