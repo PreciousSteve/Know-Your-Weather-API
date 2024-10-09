@@ -10,13 +10,13 @@ from app.crud.user_crud import update_profile, get_user_by_username, get_user_by
 router = APIRouter(tags=["User Management"], prefix="/user")
 
 @router.get("/profile", description="Get profile details")
-def get_my_profile(session:Session=Depends(get_db), current_user=Depends(get_current_user)):
+async def get_my_profile(session:Session=Depends(get_db), current_user=Depends(get_current_user)):
     data = {"message": f"Hi, {current_user.username}", "email": current_user.email}
     return data
 
 
 @router.put("/profile/{username}/", description="Edit profile details")
-def edit_profile(username:str, profile:UserUpdate, session: Session=Depends(get_db), current_user=Depends(get_current_user)):
+async def edit_profile(username:str, profile:UserUpdate, session: Session=Depends(get_db), current_user=Depends(get_current_user)):
     existing_profile = get_user_by_username(session=session, username=username)
     if existing_profile is None:
         raise HTTPException(status_code=404, detail="Incorrect username or Username not found")

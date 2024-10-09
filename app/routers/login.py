@@ -11,7 +11,7 @@ from app.utils.json_response import auth_response
 router = APIRouter(tags=["Authentication"], prefix="/auth")
 
 @router.post("/login/", description="Authenticate user with email and password. Returns an access token upon successful login.")
-def user_login(form_data:Login, session:Session=Depends(get_db)):
+async def user_login(form_data:Login, session:Session=Depends(get_db)):
     user = authenticate_user(session, form_data.email, form_data.password)
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
