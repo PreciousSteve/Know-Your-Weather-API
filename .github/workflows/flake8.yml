@@ -8,11 +8,10 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
         python-version: ["3.8", "3.9", "3.10"]
 
     steps: 
@@ -27,13 +26,8 @@ jobs:
       - name: Install dependencies and run flake8 linting
         run:  |
           python3 -m venv venv
-          if [ $RUNNER_OS == "Windows" ]; then
-            venv\Scripts\activate
-          else
-            source venv/bin/activate
-          fi
+          source venv/bin/activate
           python -m pip install --upgrade pip
           pip install flake8
 
           flake8 ./app
-        shell: bash
