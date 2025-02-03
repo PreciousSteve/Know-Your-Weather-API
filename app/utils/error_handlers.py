@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from sqlalchemy.exc import IntegrityError
 
+
 async def http_exception_handler(request: Request, exc: HTTPException):
     """HTTP exception handler"""
     return JSONResponse(
@@ -13,6 +14,7 @@ async def http_exception_handler(request: Request, exc: HTTPException):
             "message": exc.detail,
         },
     )
+
 
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     """Validation exception handler"""
@@ -30,6 +32,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         },
     )
 
+
 async def integrity_error_handler(request: Request, exc: IntegrityError):
     """Integrity error exception handler"""
     return JSONResponse(
@@ -40,6 +43,7 @@ async def integrity_error_handler(request: Request, exc: IntegrityError):
             "message": f"An unexpected error occurred: {exc}",
         },
     )
+
 
 async def general_exception_handler(request: Request, exc: Exception):
     """General exception handler"""
