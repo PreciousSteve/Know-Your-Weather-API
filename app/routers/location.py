@@ -9,6 +9,10 @@ router = APIRouter(tags=["Location Management"])
 
 
 @router.post("/locations", response_model=LocationResponse, description="Add a new location.")
-async def new_location(location:Location, session:Session=Depends(get_db), current_user=Depends(get_current_user)):
+async def new_location(
+    location: Location,
+    session: Session = Depends(get_db),
+    current_user=Depends(get_current_user)
+):
     new_location = create_location(session=session, location=location, user_id=current_user.id)
     return new_location

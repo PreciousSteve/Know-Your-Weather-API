@@ -3,11 +3,14 @@ from fastapi.exceptions import RequestValidationError
 from sqlalchemy.exc import IntegrityError
 from .database.db import engine, Base
 from .routers import register, login, profile, location
-from .utils.error_handlers import (integrity_error_handler, general_exception_handler, http_exception_handler, validation_exception_handler)
+from .utils.error_handlers import (
+    integrity_error_handler, general_exception_handler,
+    http_exception_handler, validation_exception_handler
+)
 
 
-app = FastAPI(title="Know Your Weather API", 
-              description="API that offers accurate and up-to-date weather data, helping users stay informed and prepared", 
+app = FastAPI(title="Know Your Weather API",
+              description="API helping users stay informed and prepared about the weather",
               version="1.0.0")
 
 
@@ -16,7 +19,7 @@ Base.metadata.create_all(bind=engine)
 
 @app.get("/v1/", tags=["Home"], description="This is the root Route of the app")
 def read_root_v1():
-    return {"message":"Welcome to KnowYourWeather API - version 1"}
+    return {"message": "Welcome to KnowYourWeather API - version 1"}
 
 
 app.include_router(register.router, prefix='/v1')
