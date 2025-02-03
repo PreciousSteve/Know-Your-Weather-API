@@ -16,7 +16,7 @@ config = context.config
 # This line sets up loggers basically.
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
-    
+
 # Set the sqlalchemy.url from environment variables
 db_url = DATABASE_URL
 config.set_main_option('sqlalchemy.url', db_url)
@@ -26,8 +26,6 @@ config.set_main_option('sqlalchemy.url', db_url)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from app.models.user import User
-from app.models.locations import Location
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
