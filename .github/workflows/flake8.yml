@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies and run flake8 linting
         run:  |
           python3 -m venv venv
-          if [[ "$RUNNER_OS" == 'Windows' ]]; then
+          if [[ ${{ runner.os }} == 'Windows' ]]; then
             venv\Scripts\activate
           else
             source venv/bin/activate
